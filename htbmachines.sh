@@ -10,25 +10,6 @@ purpleColour="\e[0;35m\033[1m"
 turquoiseColour="\e[0;36m\033[1m"
 grayColour="\e[0;37m\033[1m"
 # Extra Colors
-cyanColour="\e[0;96m\033[1m"       # Cian brillante
-orangeColour="\e[38;5;214m\033[1m"  # Naranja
-pinkColour="\e[38;5;205m\033[1m"    # Rosa fuerte
-lightRedColour="\e[1;91m\033[1m"    # Rojo claro
-lightGreenColour="\e[1;92m\033[1m"  # Verde claro
-lightYellowColour="\e[1;93m\033[1m" # Amarillo claro
-lightBlueColour="\e[1;94m\033[1m"   # Azul claro
-lightPurpleColour="\e[1;95m\033[1m" # Púrpura claro
-lightCyanColour="\e[1;96m\033[1m"   # Cian claro
-whiteColour="\e[1;97m\033[1m"       # Blanco brillante
-blackColour="\e[1;90m\033[1m"       # Negro grisáceo
-goldColour="\e[38;5;220m\033[1m"    # Dorado
-silverColour="\e[38;5;250m\033[1m"  # Plateado
-bronzeColour="\e[38;5;130m\033[1m"  # Bronce
-
-
-
-
-
 
 #Variables globales 
 main_url="https://htbmachines.github.io/bundle.js"
@@ -51,29 +32,13 @@ banner="${greenColour}$(cat << "EOF"
  / __  / / / / /_/ /  / /  / / ___ / /___/ __  // // /|  / /___ ___/ / 
 /_/ /_/ /_/ /_____/  /_/  /_/_/  |_\____/_/ /_/___/_/ |_/_____//____/  [v 1.0]
                                
-                                     -=[ by r4venn ]=-                                        
+                                     -=[ by r4venn_ ]=-                                        
 
 
 EOF
 )${endColour}"
 
 
-function helpPanel(){
-  
-  echo -e "$banner"
-  echo -e "\n${yellowColour}[+]${endColour} ${grayColour}Usage:${endColour} \n\t./htbmachines.sh [options] [arguments]"
-  echo -e "\n${yellowColour}[+]${endColour} ${grayColour}Options:${endColour}"
-  echo -e "\t-d                 -Install dependencies"
-  echo -e "\t-u                 -Download or update required files"
-  echo -e "\t-a                 -Show all IP Addresses and Machines (Interactive)"
-  echo -e "\t-i <ip_address>    -Search by IP Address"
-  echo -e "\t-m <machineName>   -Search Machine Name"
-  echo -e "\t-s                 -Search Machines by Difficulty (Interactive)"
-  echo -e "\t-h                 -Help Panel"
-  echo -e "\n${yellowColour}[+]${endColour} ${grayColour}Examples:${endColour}"
-  echo -e "\t./htbmachines.sh -m Inception"
-  echo -e "\t./htbmachines.sh -i 10.10.10.248"
-  }
 
 
 #Instala las dependencias
@@ -98,7 +63,7 @@ function spinner(){
 
 # Función para actualizar archivos
 function updateFiles(){
-  echo -e "${blueColour}[!] Make sure you have installed the dependencies with -i parameter ${endColour}"
+  echo -e "${blueColour}[!] Make sure you have installed the dependencies with -d parameter ${endColour}"
   sleep 1
 
   if [ ! -f bundle.js ]; then
@@ -167,27 +132,63 @@ function show_all(){
   echo -e "$banner"
 
   echo -e "\n${cyanColour}--------------------------------[::] Select an option [::]--------------------------------${endColour}\n\n"
-  echo -e "${greenColour}[ 1 ]${endColour}${yellowColour} Show all Machine Names${endColour} "
-  echo -e "${greenColour}[ 2 ]${endColour}${yellowColour} Show all IP Addresses${endColour}\n\n "
+  echo -e "\n${greenColour}[+] Show all:${endColour}\n"
+  echo -e "${greenColour}[ 1 ]${endColour}${yellowColour} Machine Names${endColour} "
+  echo -e "${greenColour}[ 2 ]${endColour}${yellowColour} IP Addresses${endColour} "
+  echo -e "${greenColour}[ 3 ]${endColour}${yellowColour} Easy ${endColour} "
+  echo -e "${greenColour}[ 4 ]${endColour}${yellowColour} Medium${endColour} "
+  echo -e "${greenColour}[ 5 ]${endColour}${yellowColour} Hard${endColour}"
+  echo -e "${greenColour}[ 6 ]${endColour}${yellowColour} Insane${endColour}"
+  echo -e "${greenColour}[ 7 ]${endColour}${yellowColour} Linux Machines${endColour} "
+  echo -e "${greenColour}[ 8 ]${endColour}${yellowColour} Windows Machines${endColour}\n\n "
 
   echo -ne "${purpleColour}[~]${endColour} ${grayColour}Select: ${endColour}"
   read output_show
 
   if [[ $output_show -eq 1 ]]; then
-
-    echo -e "\n${greenColour}[+]${endColour} ${blueColour}Showing all Machine names...${endColour}"
-    sleep 1
-    grep "name: " bundle.js | tail -n 201 | sed "s/name: /$(echo -e "${blueColour}Machine:${endColour} ${greenColour}") /" | tr -d '"' | tr -d "," | column
-
-
-
+    echo -e "${cyanColour}\n--------------------------------------------[::] All Machines [::]--------------------------------------------------\n${endColour}"
+    cat bundle.js| grep "dificultad: "  -B 5 | grep name | awk 'NF{print $NF}' | tr -d '"' | tr -d "," | column 
+    echo -e "${cyanColour}\n--------------------------------------------[::] All Machines [::]--------------------------------------------------\n${endColour}"
   elif [[ $output_show -eq 2 ]]; then
+    echo -e "${cyanColour}\n--------------------------------------------[::] IP [::]--------------------------------------------------\n${endColour}"
+    grep "ip: " bundle.js | tr -d " "  | sed "s/ip:/$(echo -e "> ")/" | tr -d ',' | tr -d '"' | tail -n 201 | column
+    echo -e "${cyanColour}\n--------------------------------------------[::] IP [::]--------------------------------------------------\n${endColour}"
+  elif [[ $output_show -eq 3 ]]; then 
+    echo -e "${cyanColour}\n--------------------------------------------[::] Easy [::]--------------------------------------------------\n${endColour}"
+    cat bundle.js| grep "dificultad: \"Fácil\"" -B 5 | grep name | awk 'NF{print $NF}' | tr -d '"' | tr -d "," | column 
+    echo -e "${cyanColour}\n--------------------------------------------[::] Easy [::]--------------------------------------------------\n${endColour}"
+  elif [[ $output_show -eq 4 ]]; then 
+
+    echo -e "${cyanColour}\n--------------------------------------------[::] Medium [::]--------------------------------------------------\n${endColour}"
+    cat bundle.js| grep "dificultad: \"Media\"" -B 5 | grep name | awk 'NF{print $NF}' | tr -d '"' | tr -d "," | column 
+    echo -e "${cyanColour}\n--------------------------------------------[::] Medium [::]--------------------------------------------------\n${endColour}"
+
+  elif [[ $output_show -eq 5 ]]; then 
+
+    echo -e "${cyanColour}\n--------------------------------------------[::] Hard [::]--------------------------------------------------\n${endColour}"
+    cat bundle.js| grep "dificultad: \"Difícil\"" -B 5 | grep name | awk 'NF{print $NF}' | tr -d '"' | tr -d "," | column 
+    echo -e "${cyanColour}\n--------------------------------------------[::] Hard [::]--------------------------------------------------\n${endColour}"
+
+  elif [[ $output_show -eq 6 ]]; then
+    
+    echo -e "${cyanColour}\n--------------------------------------------[::] Insane [::]--------------------------------------------------\n${endColour}"
+    cat bundle.js| grep "dificultad: \"Insane\"" -B 5 | grep name | awk 'NF{print $NF}' | tr -d '"' | tr -d "," | column 
+    echo -e "${cyanColour}\n--------------------------------------------[::] Insane [::]--------------------------------------------------\n${endColour}"
+
+  elif [[ $output_show -eq 7 ]]; then
+    echo -e "${cyanColour}\n--------------------------------------------[::] Linux [::]--------------------------------------------------\n${endColour}"
+    cat bundle.js| grep "Linux" -B 4 | grep "name:" | awk 'NF{print $NF}' | tr -d '"' | tr -d "," | column
+    echo -e "${cyanColour}\n--------------------------------------------[::] Linux [::]--------------------------------------------------\n${endColour}"
+
+  elif [[ $output_show -eq 8  ]]; then 
+    echo -e "${cyanColour}\n--------------------------------------------[::] Windows [::]--------------------------------------------------\n${endColour}"
+    cat bundle.js| grep "Windows" -B 4 | grep "name:" | awk 'NF{print $NF}' | tr -d '"' | tr -d "," | column
+    echo -e "${cyanColour}\n--------------------------------------------[::] Windows [::]--------------------------------------------------\n${endColour}"
+    
+
  
-    echo -e "\n${greenColour}[+]${endColour} ${blueColour}Showing all IP Addresses...${endColour}"
-    sleep 1
-    grep "ip: " bundle.js | tr -d " "  | sed "s/ip:/$(echo -e "${blueColour}IP${endColour} - ${greenColour}")/" | tr -d ',' | tr -d '"' | tail -n 201 | column 
   else 
-    echo -e "${redColour}\n[!] You have to select 1 or 2${endColour}"
+    echo -e "${redColour}\n[!] You have to select a number [1-8]${endColour}"
     exit 1
   fi
 
@@ -206,99 +207,47 @@ function search_ip(){
 }
 
 
-function search_difficulty(){
-  echo -e "$banner"
-  echo -e "\n${cyanColour}--------------------------------[::] Select an option [::]--------------------------------${endColour}\n\n"
-  echo -e "\n${greenColour}[+] Search by:${endColour}\n"
-  echo -e "${greenColour}[ 1 ]${endColour}${yellowColour} Easy Machines${endColour} "
-  echo -e "${greenColour}[ 2 ]${endColour}${yellowColour} Medium Machines${endColour} "
-  echo -e "${greenColour}[ 3 ]${endColour}${yellowColour} Hard Machines${endColour} "
-  echo -e "${greenColour}[ 4 ]${endColour}${yellowColour} Insane${endColour} "
+function search_skill(){
+  skill="$1"
+  
+  check_skill="$(cat bundle.js | grep "skills: " -B 6 | grep "$skill" -i -B 6 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d "," | column)"
 
-  echo -ne "\n\n${purpleColour}[~]${endColour} ${grayColour}Select:${endColour} "
-  read output_show
-
-
-
-  if [[ $output_show -eq 1 ]]; then
-    cat bundle.js | grep "Fácil" -A 2 -B 5 \
-    | grep -vE "id:|sku|resuelta|push|Css|Color:|Case|Return|Switch" \
-    | tr -d '"' | tr -d ',' | tr -d '-' \
-    | sed "s/name:/$(echo -e "${grayColour}Name:${endColour} ${greenColour}")/" \
-    | sed "s/ip:/$(echo -e "${grayColour}IP:${endColour} ${greenColour}")/" \
-    | sed "s/so:/$(echo -e "${grayColour}OS:${endColour} ${greenColour}")/" \
-    | sed "s/Fácil/$(echo -e "${grayColour}Easy${endColour} ${greenColour}")/" \
-    | sed "s/dificultad:/$(echo -e "${grayColour}Difficulty:${endColour} ${greenColour}")/" \
-    | sed "s/like:/$(echo -e "${grayColour}Certifications Prep:${endColour} ${greenColour}")/" \
-    | sed "s/skills:/$(echo -e "${grayColour}Skills:${endColour} ${greenColour}")/" \
-    | sed "s/Youtube:/$(echo -e "${grayColour}Youtube:${endColour} ${greenColour}")/" \
-    | sed "s/^ *//" \
-    | sed -E '/^skills:/ s/: /:\n\t[+] /' \
-    | sed -E 's/ - /\n\t[+] /g' \
-    | sed -E 's/^(.)/\U\1/' \
-    | awk -v line="$(echo -e "${cyanColour}--------------------------------[::] Easy [::]--------------------------------${endColour}")" '{print} /Certifications Prep:/ {print "\n" line "\n"}'
-  elif [[ $output_show -eq 2 ]]; then 
-    cat bundle.js | grep "Media" -A 2 -B 5 \
-    | grep -vE "id:|sku|resuelta|push|Css|Color:|Case|Return|Switch" \
-    | tr -d '"' | tr -d ',' | tr -d '-' \
-    | sed "s/name:/$(echo -e "${grayColour}Name:${endColour} ${greenColour}")/" \
-    | sed "s/ip:/$(echo -e "${grayColour}IP:${endColour} ${greenColour}")/" \
-    | sed "s/so:/$(echo -e "${grayColour}OS:${endColour} ${greenColour}")/" \
-    | sed "s/Media/$(echo -e "${blueColour}Medium${endColour} ${greenColour}")/" \
-    | sed "s/dificultad:/$(echo -e "${grayColour}Difficulty:${endColour} ${greenColour}")/" \
-    | sed "s/like:/$(echo -e "${grayColour}Certifications Prep:${endColour} ${greenColour}")/" \
-    | sed "s/skills:/$(echo -e "${grayColour}Skills:${endColour} ${greenColour}")/" \
-    | sed "s/Youtube:/$(echo -e "${grayColour}Youtube:${endColour} ${greenColour}")/" \
-    | sed "s/^ *//" \
-    | sed -E '/^skills:/ s/: /:\n\t[+] /' \
-    | sed -E 's/ - /\n\t[+] /g' \
-    | sed -E 's/^(.)/\U\1/' \
-    | awk -v line="$(echo -e "${cyanColour}--------------------------------[::] Medium [::]--------------------------------${endColour}")" '{print} /Certifications Prep:/ {print "\n" line "\n"}'
-
-  elif [[ $output_show -eq 3 ]]; then 
-    cat bundle.js | grep "Difícil" -A 2 -B 5 \
-    | grep -vE "id:|sku|resuelta|push|Css|Color:|Case|Return|Switch" \
-    | tr -d '"' | tr -d ',' | tr -d '-' \
-    | sed "s/name:/$(echo -e "${grayColour}Name:${endColour} ${greenColour}")/" \
-    | sed "s/ip:/$(echo -e "${grayColour}IP:${endColour} ${greenColour}")/" \
-    | sed "s/so:/$(echo -e "${grayColour}OS:${endColour} ${greenColour}")/" \
-    | sed "s/Difícil/$(echo -e "${blueColour}Hard${endColour} ${greenColour}")/" \
-    | sed "s/dificultad:/$(echo -e "${grayColour}Difficulty:${endColour} ${greenColour}")/" \
-    | sed "s/like:/$(echo -e "${grayColour}Certifications Prep:${endColour} ${greenColour}")/" \
-    | sed "s/skills:/$(echo -e "${grayColour}Skills:${endColour} ${greenColour}")/" \
-    | sed "s/Youtube:/$(echo -e "${grayColour}Youtube:${endColour} ${greenColour}")/" \
-    | sed "s/^ *//" \
-    | sed -E '/^skills:/ s/: /:\n\t[+] /' \
-    | sed -E 's/ - /\n\t[+] /g' \
-    | sed -E 's/^(.)/\U\1/' \
-    | awk -v line="$(echo -e "${cyanColour}--------------------------------[::] Medium [::]--------------------------------${endColour}")" '{print} /Certifications Prep:/ {print "\n" line "\n"}'
-
-  elif [[ $output_show -eq 4 ]]; then 
-    cat bundle.js | grep "Insane" -A 2 -B 5 \
-    | grep -vE "id:|sku|resuelta|push|Css|Color:|Case|Return|Switch" \
-    | tr -d '"' | tr -d ',' | tr -d '-' \
-    | sed "s/name:/$(echo -e "${grayColour}Name:${endColour} ${greenColour}")/" \
-    | sed "s/ip:/$(echo -e "${grayColour}IP:${endColour} ${greenColour}")/" \
-    | sed "s/so:/$(echo -e "${grayColour}OS:${endColour} ${greenColour}")/" \
-    | sed "s/Insane/$(echo -e "${blueColour}Insane${endColour} ${greenColour}")/" \
-    | sed "s/dificultad:/$(echo -e "${grayColour}Difficulty:${endColour} ${greenColour}")/" \
-    | sed "s/like:/$(echo -e "${grayColour}Certifications Prep:${endColour} ${greenColour}")/" \
-    | sed "s/skills:/$(echo -e "${grayColour}Skills:${endColour} ${greenColour}")/" \
-    | sed "s/Youtube:/$(echo -e "${grayColour}Youtube:${endColour} ${greenColour}")/" \
-    | sed "s/^ *//" \
-    | sed -E '/^skills:/ s/: /:\n\t[+] /' \
-    | sed -E 's/ - /\n\t[+] /g' \
-    | sed -E 's/^(.)/\U\1/' \
-    | awk -v line="$(echo -e "${cyanColour}--------------------------------[::] Medium [::]--------------------------------${endColour}")" '{print} /Certifications Prep:/ {print "\n" line "\n"}'
-
+  if [ "$check_skill" ]; then
+    echo -e "\n${yellowColour}[+]${endColour} ${greenColour}Machines with skills of${endColour}${blueColour} $skill ${endColour}"
+    echo -e "${cyanColour}\n--------------------------------------------[::] Machines [::]--------------------------------------------------\n${endColour}"
+    cat bundle.js | grep "skills: " -B 6 | grep "$skill" -i -B 6 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d "," | column
+    echo -e "${cyanColour}\n--------------------------------------------[::] Machines [::]--------------------------------------------------\n${endColour}"
+  else
+    echo -e "\n${redColour}[!] Not found${endColour} \n"
   fi 
 
-}
+  }
+
+function helpPanel(){
+  
+  echo -e "$banner"
+  echo -e "\n${yellowColour}[+]${endColour} ${grayColour}Usage:${endColour} \n\t./htbmachines.sh [options] [arguments]"
+  echo -e "\n${yellowColour}[+]${endColour} ${grayColour}Options:${endColour}"
+  echo -e "\t-d                 -Install dependencies"
+  echo -e "\t-u                 -Download or update required files"
+  echo -e "\t-a                 -Show all [Interactive]"
+  echo -e "\t-i <ip_address>    -Search by IP Address"
+  echo -e "\t-m <machineName>   -Search Machine Name"
+  echo -e "\t-s <skill>         -Search by Skill"
+  echo -e "\t-h                 -Help Panel"
+  echo -e "\n${yellowColour}[+]${endColour} ${grayColour}Examples:${endColour}"
+  echo -e "\t./htbmachines.sh -m Inception"
+  echo -e "\t./htbmachines.sh -i 10.10.10.248"
+  echo -e "\t./htbmachines.sh -s SSRF" 
+  echo -e '\t./htbmachines.sh -s "Local File Inclusion"'
+  }
+
 
 #Indicadores
 declare -i parameter_counter=0
 
-while getopts "m:udi:ash" arg; do
+
+while getopts "m:udi:as:h" arg; do
   case $arg in 
 
     m) machineName=$OPTARG; let parameter_counter+=1;;
@@ -306,7 +255,7 @@ while getopts "m:udi:ash" arg; do
     d) let parameter_counter+=3;;
     i) ip_address=$OPTARG; let parameter_counter+=4;;
     a) let parameter_counter+=5;;
-    s) let parameter_counter+=6;;
+    s) skill="$OPTARG"; let parameter_counter+=6;;
     h) ;;
   esac
 done
@@ -321,9 +270,10 @@ elif [ $parameter_counter -eq 3 ]; then
 elif [ $parameter_counter -eq 4 ]; then 
   search_ip $ip_address
 elif [ $parameter_counter -eq 5 ]; then 
-  show_all
-elif [ $parameter_counter -eq 6 ]; then 
-  search_difficulty
+  show_all 
+elif [ $parameter_counter -eq 6 ]; then
+  search_skill "$skill" 
+
 else
   helpPanel 
 fi
