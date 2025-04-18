@@ -8,7 +8,9 @@
   <img src="https://img.shields.io/badge/Interactive-Terminal-yellow?style=for-the-badge" />
 </p>
 
----
+![image](https://github.com/user-attachments/assets/c6ead30f-4f4e-4714-83ef-f4cb6fe199f2)
+
+
 
 ## About
 
