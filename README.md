@@ -1,8 +1,39 @@
-# HTB-Machines
-### Description
-Bash script that search machines from Hack The Box platform (Hard Bash Scripting)
+<h1 align="center">
+ HTB MACHINES 
+</h1>
 
-### Installation and Setting up 
+<p align="center">
+  <img src="https://img.shields.io/badge/Bash-Script-green?style=for-the-badge&logo=gnubash" />
+  <img src="https://img.shields.io/badge/HACKING-HTB%20Machines-blueviolet?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Interactive-Terminal-yellow?style=for-the-badge" />
+</p>
+
+---
+
+## About
+
+**`htbmachines.sh`** is a Bash-based command-line utility to query Hack The Box (HTB) machine data from the community-maintained `bundle.js` database.  
+It allows you to **search machines by name, IP address, skills, OS, difficulty**, or browse interactively by category.
+
+This tool is ideal for:
+-  HTB players who want fast recon of machines
+-  Keeping track of progress or searching for skill-based practice
+-  Filtering targets for specific certifications or challenges
+
+> 📦 Requires internet for updates, and uses a local cached JS file once downloaded.
+
+---
+
+##  Features
+
+-  Search by **machine name**, **IP address**, or **skill**
+-  Show machines by **difficulty** or **OS**
+-  Live updates of the latest HTB machines
+-  Installs required tools automatically (`js-beautify`, `moreutils`, etc.)
+-  Clean, colored terminal output
+-  Interactive menu mode
+
+## Installation and Setting up 
 Before to start searching machines, you have to clone the repo into your machine, install dependencies and download the necessary files like `bundle.js`. 
 You just have to do the following:
 ```bash
@@ -11,7 +42,7 @@ cd HTB-Machines
 ./htbmachines -d
 ./htbmachines -u
 ```
-Once you hace already run this commands, you are ready to use this tool.
+Once you have already run this commands, you are ready to use this tool.
 
 ### Usage
 
